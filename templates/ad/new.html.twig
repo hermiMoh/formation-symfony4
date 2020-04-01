@@ -1,0 +1,29 @@
+{%  extends 'base.html.twig' %}
+
+{% block title %}  Create one Ad  {% endblock %}
+
+{% form_theme form 'ad/_collection.html.twig' %}
+{% block body %}
+    <div class="container">
+       <h1>Create New Ad</h1>
+
+        {{ form_start(form) }}
+
+        {{ form_widget(form) }}
+
+        <button type="submit" class="btn btn-primary">Create New Ad</button>
+       {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+
+
+{% block javascripts %}
+    <script src="/js/ad.js">
+     
+    </script>
+{% endblock %}
+
+
+
+
