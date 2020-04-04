@@ -12,6 +12,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdController extends AbstractController
@@ -34,6 +36,7 @@ class AdController extends AbstractController
     /**
     * function to create an AD
     *@Route("/ads/new", name ="ads_create")
+    *@IsGranted("ROLE_USER")
     * @return Response
     */
     public function create(Request $request, EntityManagerInterface $entityManager)  {
@@ -75,7 +78,8 @@ class AdController extends AbstractController
 
       /**
        * display a form to EDIT A SELECTED AD
-       *@Route("/ads/{slug}/edit", name ="ads_edit")
+       * @Route("/ads/{slug}/edit", name ="ads_edit")
+       * @Security("is_granted('ROLE_USER') and user === ad.getAuthor()", message = "This Ad not yours, you can not edit it !")
        * @return Response
        */
       public function edit(Ad $ad, Request $request, EntityManagerInterface $entityManager)  {
@@ -125,5 +129,27 @@ class AdController extends AbstractController
         ]) ;
     }
 
+    /**
+     * permet de supprimer une annonce d'un utilisateur 
+     * @Route("/ads/{slug}/delete", name = "ads_delete")
+     * @Security("is_granted('ROLE_USER') and user == ad.getAuthor()", message ="You can not access for this resource !")
+     *
+     * @param Ad $ad
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     */
+    public function delete(Ad $ad, EntityManagerInterface $entityManager)  {
+           $entityManager->remove($ad) ;
+           $entityManager->flush() ;
+
+
+           $this->addFlash(
+            'success',
+            "The  Ad  <strong>{$ad->getTitle()}</strong> Was deleted with Success !"
+        );
+
+         
+        return   $this->redirectToRoute("ads_index")  ;
+    }
 
 }
