@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page not Found {% endblock %}
+
+{% block body %}
+   <div class="container">
+       <h1>Oups ! You search a page not found !</h1>
+       <p>we probably have trouble informing you !, no problem, you can return to home page and see last our Ads</p>
+       <a href="{{ path('homepage' )}}" class="btn btn-primary">Back to Home</a>
+       <a href="{{ path('ads_index' )}}" class="btn btn-success">Our Ads</a>
+   </div>
+{% endblock %}
