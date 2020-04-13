@@ -16,7 +16,7 @@ use Symfony\Component\Form\AbstractType;
      * @return array
      */
     protected function getSetting($label,$placeholder, $options = []) {
-        return array_merge( [
+        return array_merge_recursive( [
             'label' => $label, 
             'attr' => [
                 'placeholder' => $placeholder

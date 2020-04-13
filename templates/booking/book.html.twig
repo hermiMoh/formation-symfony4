@@ -11,7 +11,7 @@
 
 {% block body %}
 <div class="container">
-    <h1>Book the ad {{ ad.title }} </h1>
+    <h1>Book the ad <em>{{ ad.title }} </em></h1>
     <p> you are about to reserve the property of <strong>{{ ad.author.fullName }}</strong> 
     tell us all and we take care of the rest
     </p>
@@ -19,7 +19,7 @@
          {{ form_start(form) }}
 
          <div class="alert alert-light">
-             <h2>Select your interested Date !</h2>
+             <h2 class="h4">Select your interested Date !</h2>
              <div class="row">
                 <div class="col">
                    {{ form_row(form.startDate) }}
@@ -30,9 +30,9 @@
                 </div>
 
              </div>
-                    <h4> Amount of Stay : <span id="amount"> .....</span>&euro;</h4>
+                    <h4 class="mt-2"> Amount of Stay : <span id="amount"> .....</span>&euro;</h4>
 
-                      <span id="days">0</span> night(s) for {{ ad.price }}  /per night 
+                      <span id="days">0</span> night(s) for {{ ad.price | number_format(2, ',', ' ') }}&euro;  per night 
 
        
                      <h4 class="mt-4">Do you have a comment ?</h4>
